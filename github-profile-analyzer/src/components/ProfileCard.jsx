@@ -2,6 +2,8 @@ import { useGithubProfile } from "../hooks/useGithubProfile";
 import { calculateDeveloperScore } from "../utils/scoreCalculator";
 import ScoreBadge from "./ScoreBadge";
 import LanguageChart from "./LanguageChart";
+import RepoList from "./RepoList";
+
 
 
 import StatCard from "./StatCard";
@@ -31,6 +33,9 @@ export default function ProfileCard({ username }) {
   <ScoreBadge score={score} />
 
   <LanguageChart repos={repos} />
+
+  <RepoList repos={repos} />
+
 </div>
 
   );
