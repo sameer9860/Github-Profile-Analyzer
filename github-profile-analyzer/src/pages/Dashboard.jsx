@@ -1,25 +1,26 @@
 import { useState } from "react";
 import SearchBar from "../components/SearchBar";
 import ProfileCard from "../components/ProfileCard";
-import "./Dashboard.css";
-
+import "../index.css";
 
 export default function Dashboard() {
   const [username, setUsername] = useState("");
 
   return (
     <div className="dashboard">
-      <header className="header">
+      {/* HERO SECTION */}
+      <section className="hero">
         <h1>GitHub Profile Analyzer</h1>
-        <p>Analyze GitHub profiles with visual insights</p>
-      </header>
+        <p>Analyze GitHub developers with visual insights</p>
 
-      <SearchBar onSearch={setUsername} />
+        <SearchBar onSearch={setUsername} />
+      </section>
 
+      {/* CONTENT */}
       {username && (
-        <div className="content">
+        <section className="content">
           <ProfileCard username={username} />
-        </div>
+        </section>
       )}
     </div>
   );
