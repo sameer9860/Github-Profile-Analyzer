@@ -96,3 +96,31 @@ body {
   margin-top: 6px;
   color: #8b949e;
 }
+
+.search-bar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.search-bar input {
+  flex: 1;
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #30363d;
+  background: #161b22;
+  color: #c9d1d9;
+}
+
+.search-bar button {
+  padding: 12px 18px;
+  border-radius: 6px;
+  border: none;
+  background: #238636;
+  color: white;
+  cursor: pointer;
+}
+
+.search-bar button:hover {
+  background: #2ea043;
+}
