@@ -5,13 +5,14 @@ export default function SearchBar({ onSearch }) {
 
   return (
     <form
+      className="search-bar"
       onSubmit={(e) => {
         e.preventDefault();
-        onSearch(value);
+        if (value.trim()) onSearch(value);
       }}
     >
       <input
-        placeholder="Enter GitHub username"
+        placeholder="Enter GitHub username..."
         value={value}
         onChange={(e) => setValue(e.target.value)}
       />
