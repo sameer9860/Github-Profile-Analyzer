@@ -2,9 +2,11 @@ import { useState } from "react";
 import SearchBar from "../components/SearchBar";
 import ProfileCard from "../components/ProfileCard";
 import "../index.css";
+import "../App.css";
+import { useGithubProfile } from "../hooks/useGithubProfile";
 
 export default function Dashboard() {
-const [usernames, setUsernames] = useState({ first: "", second: "" });
+  const [username, setUsername] = useState("");
 
   return (
     <div className="dashboard">
@@ -19,7 +21,7 @@ const [usernames, setUsernames] = useState({ first: "", second: "" });
       {/* CONTENT */}
       {username && (
         <section className="content">
-          <ProfileCard usernames={usernames} />
+          <ProfileCard username={username} />
         </section>
       )}
     </div>

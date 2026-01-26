@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { useGithubProfile } from "../hooks/useGithubProfile";
 import ScoreBadge from "./ScoreBadge";
 import LanguageChart from "./LanguageChart";
@@ -8,25 +9,26 @@ import { calculateDeveloperScore } from "../utils/scoreCalculator";
 export default function ProfileCard({ username }) {
   const { user, repos, loading, error } = useGithubProfile(username);
 
-  // ✅ LOADING STATE
   if (loading) {
     return (
-      <div className="profile-card">
-        <Skeleton width="100px" height="100px" style={{ borderRadius: "50%" }} />
-        <div style={{ flex: 1, marginLeft: "20px" }}>
-          <Skeleton width="60%" />
-          <Skeleton width="40%" />
-          <div className="stats-grid">
-            <Skeleton width="80px" />
-            <Skeleton width="80px" />
-            <Skeleton width="80px" />
+      <div className="profile-card skeleton-container">
+        <Skeleton
+          width="140px"
+          height="140px"
+          style={{ borderRadius: "36px" }}
+        />
+        <div className="profile-info">
+          <Skeleton width="40%" height="2rem" />
+          <Skeleton width="60%" height="1rem" style={{ marginTop: "1rem" }} />
+          <div className="stats-inline" style={{ marginTop: "2rem" }}>
+            <Skeleton width="100px" height="1.5rem" />
+            <Skeleton width="100px" height="1.5rem" />
           </div>
         </div>
       </div>
     );
   }
 
-  // ✅ ERROR STATE
   if (error) {
     return (
       <div className="error-message">
@@ -35,33 +37,47 @@ export default function ProfileCard({ username }) {
     );
   }
 
-  // ✅ NORMAL RENDER
   if (!user) return null;
 
   const score = calculateDeveloperScore(user, repos);
 
   return (
-    <div>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      style={{ width: "100%" }}
+    >
       <div className="profile-card">
-        <img src={user.avatar_url} alt="avatar" />
-        <div style={{ flex: 1 }}>
+        <img src={user.avatar_url} alt={`${user.login}'s avatar`} />
+        <div className="profile-info">
           <h2>{user.name || user.login}</h2>
-          <p>{user.bio}</p>
-          <div className="stats">
-            <span>👥 {user.followers} Followers</span>
-            <span>📦 {repos.length} Repos</span>
+          <p>{user.bio || "No bio available"}</p>
+          <div className="stats-inline">
+            <div className="stat-item">
+              <span>👥</span> {user.followers.toLocaleString()} Followers
+            </div>
+            <div className="stat-item">
+              <span>📦</span> {repos.length} Repositories
+            </div>
+            {user.location && (
+              <div className="stat-item">
+                <span>📍</span> {user.location}
+              </div>
+            )}
           </div>
         </div>
         <ScoreBadge score={score} />
       </div>
 
-  <ScoreBadge score={score} />
-
-  <LanguageChart repos={repos} />
-
-  <RepoList repos={repos} />
-
-</div>
-
+      <div className="content">
+        <div className="card-vignette">
+          <LanguageChart repos={repos} />
+        </div>
+        <div className="card-vignette">
+          <RepoList repos={repos} />
+        </div>
+      </div>
+    </motion.div>
   );
 }

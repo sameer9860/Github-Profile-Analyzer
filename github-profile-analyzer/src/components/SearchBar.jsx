@@ -7,7 +7,7 @@ export default function SearchBar({ onSearch, userKey }) {
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        if (value.trim()) onSearch(value, userKey);
+        if (value.trim()) onSearch(value);
       }}
     >
       <input
