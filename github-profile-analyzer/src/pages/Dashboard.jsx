@@ -1,6 +1,8 @@
 import { useState } from "react";
 import SearchBar from "../components/SearchBar";
 import ProfileCard from "../components/ProfileCard";
+import "./Dashboard.css";
+
 
 export default function Dashboard() {
   const [username, setUsername] = useState("");
