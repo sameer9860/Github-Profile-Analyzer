@@ -1,14 +1,13 @@
 import { useState } from "react";
 
-export default function SearchBar({ onSearch }) {
+export default function SearchBar({ onSearch, userKey }) {
   const [value, setValue] = useState("");
 
   return (
     <form
-      className="search-bar"
       onSubmit={(e) => {
         e.preventDefault();
-        if (value.trim()) onSearch(value);
+        if (value.trim()) onSearch(value, userKey);
       }}
     >
       <input

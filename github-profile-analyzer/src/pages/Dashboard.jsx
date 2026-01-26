@@ -4,7 +4,7 @@ import ProfileCard from "../components/ProfileCard";
 import "../index.css";
 
 export default function Dashboard() {
-  const [username, setUsername] = useState("");
+const [usernames, setUsernames] = useState({ first: "", second: "" });
 
   return (
     <div className="dashboard">
@@ -19,7 +19,7 @@ export default function Dashboard() {
       {/* CONTENT */}
       {username && (
         <section className="content">
-          <ProfileCard username={username} />
+          <ProfileCard usernames={usernames} />
         </section>
       )}
     </div>

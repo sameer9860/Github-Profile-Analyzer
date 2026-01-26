@@ -336,3 +336,25 @@ body {
 }
 
 
+/* error message */
+
+.error-message {
+  background: #8b0000;
+  color: white;
+  padding: 16px;
+  border-radius: 8px;
+  margin-top: 20px;
+  text-align: center;
+}
+
+
+/* comparison grid */
+.comparison-grid {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+
+
