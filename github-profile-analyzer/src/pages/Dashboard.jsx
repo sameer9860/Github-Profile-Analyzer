@@ -6,10 +6,19 @@ export default function Dashboard() {
   const [username, setUsername] = useState("");
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h1>GitHub Profile Analyzer</h1>
+    <div className="dashboard">
+      <header className="header">
+        <h1>GitHub Profile Analyzer</h1>
+        <p>Analyze GitHub profiles with visual insights</p>
+      </header>
+
       <SearchBar onSearch={setUsername} />
-      {username && <ProfileCard username={username} />}
+
+      {username && (
+        <div className="content">
+          <ProfileCard username={username} />
+        </div>
+      )}
     </div>
   );
 }
