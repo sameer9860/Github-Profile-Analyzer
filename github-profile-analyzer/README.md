@@ -1,16 +1,89 @@
-# React + Vite
+# 🚀 GitHub Profile Analyzer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A **React-based dashboard application** that analyzes GitHub profiles in real time and presents developer insights through a clean, modern UI.
 
-Currently, two official plugins are available:
+This project is built for **portfolio, LinkedIn, and professional development**, focusing on real-world frontend practices like API handling, data visualization, and UX polish.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## 📸 Preview
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Dashboard Overview
 
-## Expanding the ESLint configuration
+![Dashboard Screenshot](/home/samir/Github-Profile-Analyzer/github-profile-analyzer/public/gpa1.png)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Language Distribution (Pie Chart)
+
+![Language Chart Screenshot](/home/samir/Github-Profile-Analyzer/github-profile-analyzer/public/gpa2.png)
+
+---
+
+## ✨ Features
+
+* 🔍 Search and analyze any GitHub user
+* 👤 Profile details (avatar, bio, followers, repositories)
+* 📊 Colorful interactive **language distribution pie chart**
+* 🧮 Custom developer score calculation
+* ⏳ Loading skeletons for better UX
+* ⚠️ Error handling for invalid users / API issues
+* 📱 Responsive dashboard layout
+
+---
+
+## 🛠 Tech Stack
+
+* **React** (Vite)
+* **Recharts** (data visualization)
+* **GitHub REST API**
+* CSS (custom dashboard styling)
+
+---
+
+## 🧠 What I Learned
+
+* Working with third-party APIs (GitHub API)
+* Managing loading and error states properly
+* Transforming raw API data into meaningful visualizations
+* Building reusable React components
+* Improving UI/UX with skeleton loaders and charts
+
+---
+
+## ▶️ Getting Started
+
+### Clone the Repository
+
+```bash
+git clone https://github.com/sameer9860/github-profile-analyzer.git
+cd Github-Profile-Analyzer and again cd github-profile-analyzer
+```
+
+### Install Dependencies
+
+```bash
+npm install
+```
+
+### Run the App
+
+```bash
+npm run dev
+```
+
+Open your browser at:
+
+```
+http://localhost:5173
+```
+
+---
+
+## 🚀 Future Improvements
+
+* GitHub profile comparison feature
+* Dark / light theme toggle
+* Export profile analysis as PDF
+
+---
+
+**Built with ❤️ using React**
