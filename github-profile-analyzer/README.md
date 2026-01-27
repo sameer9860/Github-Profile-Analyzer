@@ -10,11 +10,12 @@ This project is built for **portfolio, LinkedIn, and professional development**,
 
 ### Dashboard Overview
 
-![Dashboard Screenshot](/home/samir/Github-Profile-Analyzer/github-profile-analyzer/public/gpa1.png)
+![Dashboard Screenshots](public/gpa1.png)
+![Dashboard Screenshots](public/gpa2.png)
 
-### Language Distribution (Pie Chart)
 
-![Language Chart Screenshot](/home/samir/Github-Profile-Analyzer/github-profile-analyzer/public/gpa2.png)
+
+
 
 ---
 
