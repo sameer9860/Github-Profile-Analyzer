@@ -10,8 +10,8 @@ This project is built for **portfolio, LinkedIn, and professional development**,
 
 ### Dashboard Overview
 
-![Dashboard Screenshots](public/gpa1.png)
-![Dashboard Screenshots](public/gpa2.png)
+![Dashboard Screenshots](/github-profile-analyzer/public/gpa1.png)
+![Dashboard Screenshots](/github-profile-analyzer/public/gpa2.png)
 
 
 
