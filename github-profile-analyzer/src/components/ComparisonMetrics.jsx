@@ -119,64 +119,87 @@ export default function ComparisonMetrics({ usernames }) {
       </motion.div>
 
       {/* METRICS GRID */}
-      <motion.div className="metrics-grid" variants={containerVariants}>
-        {metrics.map((metric) => {
-          const value1 = profile1[metric.key] || 0;
-          const value2 = profile2[metric.key] || 0;
-          const max = Math.max(value1, value2);
-          const percent1 = max ? (value1 / max) * 100 : 0;
-          const percent2 = max ? (value2 / max) * 100 : 0;
-          const winner =
-            value1 > value2 ? "first" : value2 > value1 ? "second" : "tie";
+     <motion.div className="metrics-grid" variants={containerVariants}>
+  {metrics.map((metric) => {
+    const value1 = profile1[metric.key] || 0;
+    const value2 = profile2[metric.key] || 0;
+    const max = Math.max(value1, value2);
+    const percent1 = max ? (value1 / max) * 100 : 0;
+    const percent2 = max ? (value2 / max) * 100 : 0;
+    const winner =
+      value1 > value2 ? "first" : value2 > value1 ? "second" : "tie";
 
-          return (
-            <motion.div
-              key={metric.key}
-              className="metric-card"
-              variants={itemVariants}
-            >
-              <div className="metric-header">
-                <span className="metric-icon">{metric.icon}</span>
-                <span className="metric-label">{metric.label}</span>
-              </div>
+    return (
+      <motion.div
+        key={metric.key}
+        className="metric-card"
+        variants={itemVariants}
+      >
+        <div className="metric-header">
+          <span className="metric-icon">{metric.icon}</span>
+          <span className="metric-label">{metric.label}</span>
+        </div>
 
-              <div className="metric-values">
-                <div
-                  className={`value-item ${winner === "first" ? "winner" : ""}`}
-                >
-                  <span className="value">{value1.toLocaleString()}</span>
-                  <span className="username">{usernames.first}</span>
-                  <div className="progress-bar">
-                    <div
-                      className="progress-fill"
-                      style={{ width: `${percent1}%` }}
-                    ></div>
-                  </div>
-                </div>
+        <div className="metric-values">
+          <div
+            className={`value-item ${winner === "first" ? "winner" : ""}`}
+          >
+            <span className="value">{value1.toLocaleString()}</span>
+            <span className="username">{usernames.first}</span>
+            <div className="progress-bar">
+              <div
+                className="progress-fill"
+                style={{ width: `${percent1}%` }}
+              ></div>
+            </div>
+          </div>
 
-                <div
-                  className={`value-item ${winner === "second" ? "winner" : ""}`}
-                >
-                  <span className="value">{value2.toLocaleString()}</span>
-                  <span className="username">{usernames.second}</span>
-                  <div className="progress-bar">
-                    <div
-                      className="progress-fill"
-                      style={{ width: `${percent2}%` }}
-                    ></div>
-                  </div>
-                </div>
-              </div>
+          <div
+            className={`value-item ${winner === "second" ? "winner" : ""}`}
+          >
+            <span className="value">{value2.toLocaleString()}</span>
+            <span className="username">{usernames.second}</span>
+            <div className="progress-bar">
+              <div
+                className="progress-fill"
+                style={{ width: `${percent2}%` }}
+              ></div>
+            </div>
+          </div>
+        </div>
 
-              {winner !== "tie" && (
-                <div className={`winner-badge ${winner}`}>
-                  🏆 {winner === "first" ? usernames.first : usernames.second} leads
-                </div>
-              )}
-            </motion.div>
-          );
-        })}
+        {winner !== "tie" && (
+          <div className={`winner-badge ${winner}`}>
+            🏆 {winner === "first" ? usernames.first : usernames.second} leads
+          </div>
+        )}
       </motion.div>
+    );
+  })}
+
+  {/* WINNER CARD AFTER FINAL SCORE */}
+  <motion.div className="metric-card winner-overall-card" variants={itemVariants}>
+    <div className="metric-header">
+      <span className="metric-icon">🏆🎉</span>
+      <span className="metric-label ">Winner!!!</span>
+    </div>
+    <div className="metric-values">
+      <div className="value-item overall-winner">
+        {profile1.final_score === profile2.final_score ? (
+          <span>It's a tie! 🤝</span>
+        ) : (
+          <span > 
+            {profile1.final_score > profile2.final_score
+              ? usernames.first
+              : usernames.second}{" "}
+            wins with highest  (final_score: {Math.max(profile1.final_score, profile2.final_score)})🏆🎉 
+          </span>
+        )}
+      </div>
+    </div>
+  </motion.div>
+</motion.div>
+
 
       {/* ACCOUNT CREATION INFO */}
       <motion.div className="account-info" variants={itemVariants}>
