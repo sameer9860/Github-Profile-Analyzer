@@ -26,13 +26,11 @@ export default function ComparisonMetrics({ usernames }) {
           fetch(`https://api.github.com/users/${usernames.second}/repos?per_page=100`).then((r) => r.json()),
         ]);
 
-        const computeTotals = (repos) => {
-          return {
-            total_stars: repos.reduce((sum, repo) => sum + (repo.stargazers_count || 0), 0),
-            total_forks: repos.reduce((sum, repo) => sum + (repo.forks_count || 0), 0),
-            total_watchers: repos.reduce((sum, repo) => sum + (repo.watchers_count || 0), 0),
-          };
-        };
+        const computeTotals = (repos) => ({
+          total_stars: repos.reduce((sum, repo) => sum + (repo.stargazers_count || 0), 0),
+          total_forks: repos.reduce((sum, repo) => sum + (repo.forks_count || 0), 0),
+          total_watchers: repos.reduce((sum, repo) => sum + (repo.watchers_count || 0), 0),
+        });
 
         const totals1 = computeTotals(repos1);
         const totals2 = computeTotals(repos2);
@@ -43,7 +41,6 @@ export default function ComparisonMetrics({ usernames }) {
 
         setProfile1({ ...data1, ...totals1, final_score: finalScore1 });
         setProfile2({ ...data2, ...totals2, final_score: finalScore2 });
-
       } catch (error) {
         console.error("Error fetching profiles:", error);
       } finally {
@@ -89,6 +86,16 @@ export default function ComparisonMetrics({ usernames }) {
     visible: { opacity: 1, y: 0 },
   };
 
+  // Determine overall winner
+  const overallWinner =
+    profile1.final_score > profile2.final_score
+      ? usernames.first
+      : profile2.final_score > profile1.final_score
+      ? usernames.second
+      : "tie";
+
+  const winnerEmoji = overallWinner === "tie" ? "🤝" : "🏆🎉";
+
   return (
     <motion.div
       className="comparison-metrics"
@@ -98,6 +105,20 @@ export default function ComparisonMetrics({ usernames }) {
     >
       <h3>Comparative Metrics</h3>
 
+      {/* OVERALL WINNER CARD */}
+      <motion.div className="winner-card" variants={itemVariants}>
+        {overallWinner === "tie" ? (
+          <div className="winner-text">
+            {winnerEmoji} It's a tie! {usernames.first} 🤝 {usernames.second}
+          </div>
+        ) : (
+          <div className="winner-text">
+            {winnerEmoji} {overallWinner} wins with highest final score!
+          </div>
+        )}
+      </motion.div>
+
+      {/* METRICS GRID */}
       <motion.div className="metrics-grid" variants={containerVariants}>
         {metrics.map((metric) => {
           const value1 = profile1[metric.key] || 0;
