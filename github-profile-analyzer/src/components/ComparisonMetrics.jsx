@@ -66,6 +66,26 @@ export default function ComparisonMetrics({ usernames }) {
       key: "public_gists",
       icon: "🔤",
     },
+    {
+      label: "Total Stars",
+      key: "total_stars",
+      icon: "⭐",
+    },
+    {
+      label: "Total Forks",
+      key: "total_forks",
+      icon: "🍴"  ,
+    },
+    {
+      label: "Total Watchers",
+      key: "total_watchers",
+      icon: "👀",
+    },
+    {
+      label:"Final Score",
+      key:"final_score",
+      icon:"🏆"
+    }
   ];
 
   const containerVariants = {
