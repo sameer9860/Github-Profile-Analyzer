@@ -83,7 +83,7 @@ export default function Home({ onSelectMode }) {
             <li>🏆 Repository insights</li>
             <li>📈 Activity metrics</li>
           </ul>
-          <div className="cta-text">Requires: 1 Username</div>
+          {/* <div className="cta-text">Requires: 1 Username</div> */}
         </motion.button>
 
         {/* COMPARISON CARD */}
@@ -117,7 +117,7 @@ export default function Home({ onSelectMode }) {
             <li>🎯 Skill comparison</li>
             <li>🔄 Activity comparison</li>
           </ul>
-          <div className="cta-text">Requires: 2 Usernames</div>
+          {/* <div className="cta-text">Requires: 2 Usernames</div> */}
         </motion.button>
       </motion.div>
 
