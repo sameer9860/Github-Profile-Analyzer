@@ -1,16 +1,20 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import SearchBar from "../components/SearchBar";
-import ProfileCard from "../components/ProfileCard";
+import ComparisonSearch from "../components/ComparisonSearch";
+import Comparison from "../components/Comparison";
 import "../index.css";
 import "../App.css";
-import { useGithubProfile } from "../hooks/useGithubProfile";
 
-export default function Dashboard({ onBack }) {
-  const [username, setUsername] = useState("");
+export default function ComparisonView({ usernames, onSearch, onBack }) {
+  const [currentUsernames, setCurrentUsernames] = useState(usernames);
+
+  const handleSearch = (newUsernames) => {
+    setCurrentUsernames(newUsernames);
+    onSearch(newUsernames);
+  };
 
   return (
-    <div className="dashboard">
+    <div className="dashboard comparison-view">
       {/* BACK BUTTON */}
       {onBack && (
         <motion.button
@@ -38,16 +42,16 @@ export default function Dashboard({ onBack }) {
 
       {/* HERO SECTION */}
       <section className="hero">
-        <h1>GitHub Profile Analyzer </h1>
-        <p>Analyze GitHub developers with visual insights</p>
+        <h1>Compare GitHub Profiles</h1>
+        <p>Compare two developers side-by-side with detailed metrics</p>
 
-        <SearchBar onSearch={setUsername} />
+        <ComparisonSearch onSearch={handleSearch} />
       </section>
 
-      {/* CONTENT */}
-      {username && (
+      {/* COMPARISON CONTENT */}
+      {(currentUsernames.first || currentUsernames.second) && (
         <section className="content">
-          <ProfileCard username={username} />
+          <Comparison usernames={currentUsernames} />
         </section>
       )}
     </div>
