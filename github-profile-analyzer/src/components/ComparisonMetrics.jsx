@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { useGithubProfile } from "../hooks/useGithubProfile";
 
 export default function ComparisonMetrics({ usernames }) {
   const [profile1, setProfile1] = useState(null);
@@ -11,6 +10,7 @@ export default function ComparisonMetrics({ usernames }) {
     const fetchData = async () => {
       setLoading(true);
       try {
+        // Fetch user profiles
         const [data1, data2] = await Promise.all([
           fetch(`https://api.github.com/users/${usernames.first}`).then((r) =>
             r.json()
@@ -19,8 +19,31 @@ export default function ComparisonMetrics({ usernames }) {
             r.json()
           ),
         ]);
-        setProfile1(data1);
-        setProfile2(data2);
+
+        // Fetch repos to calculate stars, forks, watchers
+        const [repos1, repos2] = await Promise.all([
+          fetch(`https://api.github.com/users/${usernames.first}/repos?per_page=100`).then((r) => r.json()),
+          fetch(`https://api.github.com/users/${usernames.second}/repos?per_page=100`).then((r) => r.json()),
+        ]);
+
+        const computeTotals = (repos) => {
+          return {
+            total_stars: repos.reduce((sum, repo) => sum + (repo.stargazers_count || 0), 0),
+            total_forks: repos.reduce((sum, repo) => sum + (repo.forks_count || 0), 0),
+            total_watchers: repos.reduce((sum, repo) => sum + (repo.watchers_count || 0), 0),
+          };
+        };
+
+        const totals1 = computeTotals(repos1);
+        const totals2 = computeTotals(repos2);
+
+        // Final score: sum of stars + forks + watchers
+        const finalScore1 = totals1.total_stars + totals1.total_forks + totals1.total_watchers;
+        const finalScore2 = totals2.total_stars + totals2.total_forks + totals2.total_watchers;
+
+        setProfile1({ ...data1, ...totals1, final_score: finalScore1 });
+        setProfile2({ ...data2, ...totals2, final_score: finalScore2 });
+
       } catch (error) {
         console.error("Error fetching profiles:", error);
       } finally {
@@ -46,56 +69,19 @@ export default function ComparisonMetrics({ usernames }) {
   }
 
   const metrics = [
-    {
-      label: "Public Repos",
-      key: "public_repos",
-      icon: "📚",
-    },
-    {
-      label: "Followers",
-      key: "followers",
-      icon: "👥",
-    },
-    {
-      label: "Following",
-      key: "following",
-      icon: "🔗",
-    },
-    {
-      label: "Public Gists",
-      key: "public_gists",
-      icon: "🔤",
-    },
-    {
-      label: "Total Stars",
-      key: "total_stars",
-      icon: "⭐",
-    },
-    {
-      label: "Total Forks",
-      key: "total_forks",
-      icon: "🍴"  ,
-    },
-    {
-      label: "Total Watchers",
-      key: "total_watchers",
-      icon: "👀",
-    },
-    {
-      label:"Final Score",
-      key:"final_score",
-      icon:"🏆"
-    }
+    { label: "Public Repos", key: "public_repos", icon: "📚" },
+    { label: "Followers", key: "followers", icon: "👥" },
+    { label: "Following", key: "following", icon: "🔗" },
+    { label: "Public Gists", key: "public_gists", icon: "🔤" },
+    { label: "Total Stars", key: "total_stars", icon: "⭐" },
+    { label: "Total Forks", key: "total_forks", icon: "🍴" },
+    { label: "Total Watchers", key: "total_watchers", icon: "👀" },
+    { label: "Final Score", key: "final_score", icon: "🏆" },
   ];
 
   const containerVariants = {
     hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
+    visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
   };
 
   const itemVariants = {
@@ -117,9 +103,10 @@ export default function ComparisonMetrics({ usernames }) {
           const value1 = profile1[metric.key] || 0;
           const value2 = profile2[metric.key] || 0;
           const max = Math.max(value1, value2);
-          const percent1 = (value1 / max) * 100 || 0;
-          const percent2 = (value2 / max) * 100 || 0;
-          const winner = value1 > value2 ? "first" : value2 > value1 ? "second" : "tie";
+          const percent1 = max ? (value1 / max) * 100 : 0;
+          const percent2 = max ? (value2 / max) * 100 : 0;
+          const winner =
+            value1 > value2 ? "first" : value2 > value1 ? "second" : "tie";
 
           return (
             <motion.div
@@ -133,7 +120,9 @@ export default function ComparisonMetrics({ usernames }) {
               </div>
 
               <div className="metric-values">
-                <div className={`value-item ${winner === 'first' ? 'winner' : ''}`}>
+                <div
+                  className={`value-item ${winner === "first" ? "winner" : ""}`}
+                >
                   <span className="value">{value1.toLocaleString()}</span>
                   <span className="username">{usernames.first}</span>
                   <div className="progress-bar">
@@ -144,7 +133,9 @@ export default function ComparisonMetrics({ usernames }) {
                   </div>
                 </div>
 
-                <div className={`value-item ${winner === 'second' ? 'winner' : ''}`}>
+                <div
+                  className={`value-item ${winner === "second" ? "winner" : ""}`}
+                >
                   <span className="value">{value2.toLocaleString()}</span>
                   <span className="username">{usernames.second}</span>
                   <div className="progress-bar">
