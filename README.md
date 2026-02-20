@@ -1,6 +1,6 @@
-# 🚀 GitHub Profile Analyzer
+# 🚀 GitHub Profile Analyzer and Comparer
 
-A **React-based dashboard application** that analyzes GitHub profiles in real time and presents developer insights through a clean, modern UI.
+A **React-based dashboard application** that analyzes GitHub profiles and compare them in real time and presents developer insights through a clean, modern UI.
 
 This project is built for **portfolio, LinkedIn, and professional development**, focusing on real-world frontend practices like API handling, data visualization, and UX polish.
 
@@ -10,43 +10,56 @@ This project is built for **portfolio, LinkedIn, and professional development**,
 
 ### Dashboard Overview
 
-![Dashboard Screenshots](/github-profile-analyzer/public/gpa1.png)
-![Dashboard Screenshots](/github-profile-analyzer/public/gpa2.png)
+![Dashboard Overview](/github-profile-analyzer/public/gpa3.png)
+
+### 📊 Analyzer Mode
+
+Detailed breakdown of user stats, repositories, and languages.
+
+![Analyzer Screenshot](/github-profile-analyzer/public/gpa4.png)
+![Analyzer Screenshot](/github-profile-analyzer/public/gpa5.png)
 
 
+### 🆚 Comparison Mode
 
+Compare two GitHub profiles side-by-side to see who has more contributions, followers, and better stats.
 
+![Comparison Screenshot](/github-profile-analyzer/public/gpa6.png)
+![Comparison Screenshot](/github-profile-analyzer/public/gpa7.png)
+![Comparison Screenshot](/github-profile-analyzer/public/gpa8.png)
+![Comparison Screenshot](/github-profile-analyzer/public/gpa9.png)
+![Comparison Screenshot](/github-profile-analyzer/public/gpa10.png)
 
 ---
 
 ## ✨ Features
 
-* 🔍 Search and analyze any GitHub user
-* 👤 Profile details (avatar, bio, followers, repositories)
-* 📊 Colorful interactive **language distribution pie chart**
-* 🧮 Custom developer score calculation
-* ⏳ Loading skeletons for better UX
-* ⚠️ Error handling for invalid users / API issues
-* 📱 Responsive dashboard layout
+- 🔍 Search and analyze any GitHub user
+- 👤 Profile details (avatar, bio, followers, repositories)
+- 📊 Colorful interactive **language distribution pie chart**
+- 🧮 Custom developer score calculation
+- ⏳ Loading skeletons for better UX
+- ⚠️ Error handling for invalid users / API issues
+- 📱 Responsive dashboard layout
 
 ---
 
 ## 🛠 Tech Stack
 
-* **React** (Vite)
-* **Recharts** (data visualization)
-* **GitHub REST API**
-* CSS (custom dashboard styling)
+- **React** (Vite)
+- **Recharts** (data visualization)
+- **GitHub REST API**
+- CSS (custom dashboard styling)
 
 ---
 
 ## 🧠 What I Learned
 
-* Working with third-party APIs (GitHub API)
-* Managing loading and error states properly
-* Transforming raw API data into meaningful visualizations
-* Building reusable React components
-* Improving UI/UX with skeleton loaders and charts
+- Working with third-party APIs (GitHub API)
+- Managing loading and error states properly
+- Transforming raw API data into meaningful visualizations
+- Building reusable React components
+- Improving UI/UX with skeleton loaders and charts
 
 ---
 
@@ -81,9 +94,8 @@ http://localhost:5173
 
 ## 🚀 Future Improvements
 
-* GitHub profile comparison feature
-* Dark / light theme toggle
-* Export profile analysis as PDF
+- Dark / light theme toggle
+- Export profile analysis as PDF
 
 ---
 
