@@ -25,11 +25,11 @@ export default function RepoList({ repos }) {
             </div>
 
             <div className="repo-stats">
-              <span>⭐ {repo.stargazers_count.toLocaleString()}</span>
-              <span>🍴 {repo.forks_count.toLocaleString()}</span>
-              <span
-                style={{ color: "var(--text-secondary)", fontSize: "0.8rem" }}
-              >
+              <span title="Stars">
+                ⭐ {repo.stargazers_count.toLocaleString()}
+              </span>
+              <span title="Forks">🍴 {repo.forks_count.toLocaleString()}</span>
+              <span className="repo-date" title="Last updated">
                 {new Date(repo.updated_at).toLocaleDateString()}
               </span>
             </div>
