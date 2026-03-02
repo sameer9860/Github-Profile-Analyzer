@@ -2,6 +2,9 @@
 
 A **React-based dashboard application** that analyzes GitHub profiles and compare them in real time and presents developer insights through a clean, modern UI.
 
+**Live demo:** https://github-profile-analyzerrr.netlify.app/  
+(SEO optimized for discoverability)
+
 This project is built for **portfolio, LinkedIn, and professional development**, focusing on real-world frontend practices like API handling, data visualization, and UX polish.
 
 ---
@@ -91,6 +94,11 @@ http://localhost:5173
 ```
 
 ---
+
+## 🌐 SEO & Deployment
+
+The app is deployed on Netlify and includes meta tags for search engines, Open Graph, and Twitter cards to improve ranking and sharing.  
+Live URL: https://github-profile-analyzerrr.netlify.app/
 
 ## 🚀 Future Improvements
 
