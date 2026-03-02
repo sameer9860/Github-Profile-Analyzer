@@ -10,25 +10,25 @@ This project is built for **portfolio, LinkedIn, and professional development**,
 
 ### Dashboard Overview
 
-![Dashboard Overview](/github-profile-analyzer/public/gpa3.png)
+![Dashboard Overview](/github-profile-analyzer/public/gpa1.png)
 
 ### 📊 Analyzer Mode
 
 Detailed breakdown of user stats, repositories, and languages.
 
-![Analyzer Screenshot](/github-profile-analyzer/public/gpa4.png)
-![Analyzer Screenshot](/github-profile-analyzer/public/gpa5.png)
+![Analyzer Screenshot](/github-profile-analyzer/public/gpa2.png)
+![Analyzer Screenshot](/github-profile-analyzer/public/gpa3.png)
 
 
 ### 🆚 Comparison Mode
 
 Compare two GitHub profiles side-by-side to see who has more contributions, followers, and better stats.
 
+![Comparison Screenshot](/github-profile-analyzer/public/gpa4.png)
+![Comparison Screenshot](/github-profile-analyzer/public/gpa5.png)
 ![Comparison Screenshot](/github-profile-analyzer/public/gpa6.png)
 ![Comparison Screenshot](/github-profile-analyzer/public/gpa7.png)
 ![Comparison Screenshot](/github-profile-analyzer/public/gpa8.png)
-![Comparison Screenshot](/github-profile-analyzer/public/gpa9.png)
-![Comparison Screenshot](/github-profile-analyzer/public/gpa10.png)
 
 ---
 
