@@ -3,6 +3,40 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  position: relative;
+}
+
+.theme-toggle {
+  position: fixed;
+  top: 1.25rem;
+  right: 1.25rem;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border-radius: 12px;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg);
+  color: var(--text-primary);
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: var(--shadow-sm);
+  transition: border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.theme-toggle:hover {
+  border-color: var(--accent-blue);
+  color: var(--accent-blue);
+  transform: scale(1.05);
+}
+
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--accent-blue);
+  outline-offset: 2px;
 }
 
 .logo {
@@ -164,7 +198,7 @@
 
 .metric-card:hover {
   border-color: var(--accent-green);
-  background: rgba(22, 27, 34, 0.8);
+  background: var(--bg-card-hover);
   box-shadow: 0 0 20px rgba(35, 134, 54, 0.15);
 }
 

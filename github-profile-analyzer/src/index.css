@@ -4,6 +4,7 @@
   --bg-primary: #0a0c10;
   --bg-secondary: #0d1117;
   --bg-card: rgba(22, 27, 34, 0.7);
+  --bg-card-hover: rgba(22, 27, 34, 0.9);
   --accent-blue: #58a6ff;
   --accent-green: #238636;
   --text-primary: #c9d1d9;
@@ -14,6 +15,47 @@
   --gradient-blue: linear-gradient(135deg, #58a6ff 0%, #1f6feb 100%);
   --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --chart-card-bg: #161b22;
+  --repo-item-bg: rgba(48, 54, 61, 0.2);
+  --repo-item-hover-bg: rgba(48, 54, 61, 0.3);
+  --input-placeholder: #484f58;
+  --skeleton-base: rgba(48, 54, 61, 0.4);
+  --skeleton-mid: rgba(48, 54, 61, 0.7);
+}
+
+html[data-theme="light"] {
+  --bg-primary: #f6f8fa;
+  --bg-secondary: #ffffff;
+  --bg-card: rgba(255, 255, 255, 0.92);
+  --bg-card-hover: rgba(255, 255, 255, 0.98);
+  --accent-blue: #0969da;
+  --accent-green: #1a7f37;
+  --text-primary: #1f2328;
+  --text-secondary: #656d76;
+  --border-color: rgba(208, 215, 222, 0.9);
+  --glass-bg: rgba(255, 255, 255, 0.75);
+  --glass-border: rgba(208, 215, 222, 0.85);
+  --gradient-blue: linear-gradient(135deg, #0969da 0%, #0550ae 100%);
+  --shadow-sm: 0 1px 3px rgba(31, 35, 40, 0.12);
+  --shadow-md: 0 8px 24px rgba(31, 35, 40, 0.1);
+  --chart-card-bg: #ffffff;
+  --repo-item-bg: rgba(208, 215, 222, 0.4);
+  --repo-item-hover-bg: rgba(208, 215, 222, 0.65);
+  --input-placeholder: #8c959f;
+  --skeleton-base: rgba(208, 215, 222, 0.55);
+  --skeleton-mid: rgba(208, 215, 222, 0.9);
+}
+
+html[data-theme="light"] body {
+  background-image:
+    radial-gradient(at 0% 0%, rgba(9, 105, 218, 0.08) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(26, 127, 55, 0.08) 0px, transparent 50%);
+}
+
+.recharts-text,
+.recharts-legend-item-text,
+.recharts-cartesian-axis-tick-value {
+  fill: var(--text-primary);
 }
 
 * {
@@ -102,7 +144,7 @@ input {
 }
 
 input::placeholder {
-  color: #484f58;
+  color: var(--input-placeholder);
 }
 
 button {
@@ -162,7 +204,7 @@ button:active {
 
 .profile-card:hover {
   border-color: var(--accent-blue);
-  background: rgba(22, 27, 34, 0.9);
+  background: var(--bg-card-hover);
   box-shadow: 0 0 30px rgba(88, 166, 255, 0.2), var(--shadow-md);
   transform: translateY(-5px);
 }
@@ -267,14 +309,14 @@ button:active {
 .repo-item {
   padding: 1.25rem;
   border-radius: 16px;
-  background: rgba(48, 54, 61, 0.2);
+  background: var(--repo-item-bg);
   margin-bottom: 1rem;
   transition: all 0.2s ease;
   border: 1px solid transparent;
 }
 
 .repo-item:hover {
-  background: rgba(48, 54, 61, 0.3);
+  background: var(--repo-item-hover-bg);
   border-color: var(--glass-border);
   transform: translateX(4px);
 }
@@ -391,9 +433,9 @@ button:active {
 /* SKELETON LOADING */
 .skeleton {
   background: linear-gradient(90deg,
-      rgba(48, 54, 61, 0.4) 25%,
-      rgba(48, 54, 61, 0.7) 50%,
-      rgba(48, 54, 61, 0.4) 75%);
+      var(--skeleton-base) 25%,
+      var(--skeleton-mid) 50%,
+      var(--skeleton-base) 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
   border-radius: 8px;
@@ -410,11 +452,15 @@ button:active {
 }
 
 .chart-card {
-  background: #161b22;
+  background: var(--chart-card-bg);
   padding: 20px;
   border-radius: 14px;
   margin-top: 30px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+html[data-theme="light"] .chart-card {
+  box-shadow: var(--shadow-md);
 }
 
 .chart-card h3 {
