@@ -1,13 +1,27 @@
+import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { useGithubProfile } from "../hooks/useGithubProfile";
+import { useExportableAvatarSrc } from "../hooks/useExportableAvatarSrc";
 import ScoreBadge from "./ScoreBadge";
 import LanguageChart from "./LanguageChart";
 import RepoList from "./RepoList";
 import Skeleton from "./Skeleton";
 import { calculateDeveloperScore } from "../utils/scoreCalculator";
 
-export default function ProfileCard({ username }) {
+export default function ProfileCard({ username, onExportReady }) {
   const { user, repos, loading, error } = useGithubProfile(username);
+  const { src: avatarSrc, exportReady: avatarExportReady } =
+    useExportableAvatarSrc(user?.avatar_url ?? "");
+
+  useEffect(() => {
+    if (!username) {
+      onExportReady?.(false);
+      return;
+    }
+    onExportReady?.(
+      !loading && !!user && !error && avatarExportReady
+    );
+  }, [username, loading, user, error, onExportReady, avatarExportReady]);
 
   if (loading) {
     return (
@@ -49,7 +63,19 @@ export default function ProfileCard({ username }) {
       style={{ width: "100%" }}
     >
       <div className="profile-card">
-        <img src={user.avatar_url} alt={`${user.login}'s avatar`} />
+        <img
+          className="profile-avatar"
+          src={avatarSrc}
+          alt={`${user.login}'s avatar`}
+          loading="eager"
+          decoding="async"
+          referrerPolicy="no-referrer"
+          {...(typeof avatarSrc === "string" &&
+          (avatarSrc.startsWith("http://") ||
+            avatarSrc.startsWith("https://"))
+            ? { crossOrigin: "anonymous" }
+            : {})}
+        />
         <div className="profile-info">
           <h2>{user.name || user.login}</h2>
           <p>{user.bio || "No bio available"}</p>

@@ -1,11 +1,8 @@
-import { useState } from "react";
 import { motion } from "framer-motion";
 import ProfileCard from "./ProfileCard";
 import ComparisonMetrics from "./ComparisonMetrics";
 
-export default function Comparison({ usernames }) {
-  const [comparisonData, setComparisonData] = useState(null);
-
+export default function Comparison({ usernames, onExportReady }) {
   // If neither username is provided, render nothing
   if (!usernames.first && !usernames.second) return null;
 
@@ -50,7 +47,10 @@ export default function Comparison({ usernames }) {
 
       {/* COMPARISON METRICS */}
       {usernames.first && usernames.second && (
-        <ComparisonMetrics usernames={usernames} />
+        <ComparisonMetrics
+          usernames={usernames}
+          onExportReady={onExportReady}
+        />
       )}
     </motion.div>
   );

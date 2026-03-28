@@ -170,6 +170,120 @@ button:active {
   transform: scale(0.98);
 }
 
+/* PDF — compact control: top-right under search (hero) */
+.hero-pdf-row {
+  width: 100%;
+  max-width: 600px;
+  margin: 1rem auto 0;
+  padding-top: 0.25rem;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.hero-pdf-row--wide {
+  max-width: 800px;
+}
+
+.pdf-export-actions-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.pdf-export-btn--preview {
+  background: var(--glass-bg);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+}
+
+.pdf-export-btn--preview:hover:not(:disabled) {
+  border-color: var(--accent-blue);
+  color: var(--accent-blue);
+  filter: none;
+  box-shadow: 0 4px 14px rgba(88, 166, 255, 0.18);
+}
+
+.pdf-export-btn--preview .pdf-export-btn__busy {
+  border-color: rgba(88, 166, 255, 0.35);
+  border-top-color: var(--accent-blue);
+}
+
+.pdf-export-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0.5rem 0.95rem;
+  border-radius: 10px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: var(--gradient-blue);
+  color: #fff;
+  border: 1px solid rgba(88, 166, 255, 0.35);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+.pdf-export-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  filter: brightness(1.06);
+  box-shadow: 0 6px 18px rgba(88, 166, 255, 0.28);
+}
+
+.pdf-export-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.pdf-export-btn__icon {
+  flex-shrink: 0;
+}
+
+.pdf-export-btn__label {
+  line-height: 1;
+}
+
+.pdf-export-btn__busy {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: pdf-export-spin 0.65s linear infinite;
+}
+
+@keyframes pdf-export-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.pdf-export-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  filter: none;
+}
+
+.pdf-capture-root {
+  width: 100%;
+}
+
+/* Strip effects that break DOM-to-image / html2canvas rasterization */
+.pdf-capture-root.pdf-capture-active,
+.pdf-capture-root.pdf-capture-active * {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  animation: none !important;
+  transition: none !important;
+}
+
 /* PROFILE CARD OVERHAUL */
 .profile-card {
   width: 100%;
@@ -643,4 +757,170 @@ html[data-theme="light"] .chart-card {
   .comparison-search {
     padding: 1.5rem;
   }
+}
+
+.pdf-capture-root--comparison {
+  overflow: visible;
+  width: 100%;
+}
+
+/* PDF preview modal */
+.pdf-preview-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  background: rgba(10, 12, 18, 0.65);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  box-sizing: border-box;
+}
+
+.pdf-preview-dialog {
+  position: relative;
+  width: 100%;
+  max-width: min(920px, 96vw);
+  max-height: min(92vh, 900px);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.pdf-preview-header {
+  padding: 1.1rem 1.35rem 0.75rem;
+  border-bottom: 1px solid var(--border-color);
+  text-align: left;
+}
+
+.pdf-preview-header h2 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 2rem 0.35rem 0;
+}
+
+.pdf-preview-sub {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.45;
+}
+
+.pdf-preview-close {
+  position: absolute;
+  top: 0.65rem;
+  right: 0.75rem;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.pdf-preview-close:hover {
+  background: var(--glass-bg);
+  color: var(--text-primary);
+}
+
+.pdf-preview-body {
+  flex: 1;
+  min-height: 200px;
+  overflow: auto;
+  padding: 1rem 1.25rem;
+  background: linear-gradient(180deg, rgba(88, 166, 255, 0.04) 0%, transparent 32%);
+}
+
+.pdf-preview-loading {
+  padding: 3rem;
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+.pdf-preview-sheet {
+  background: linear-gradient(180deg, #fafbfd 0%, #f0f3f9 100%);
+  border-radius: 12px;
+  padding: 12px;
+  border: 1px solid rgba(208, 215, 222, 0.5);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+html[data-theme="light"] .pdf-preview-sheet {
+  background: linear-gradient(180deg, #ffffff 0%, #f3f5f9 100%);
+}
+
+.pdf-preview-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  vertical-align: top;
+}
+
+.pdf-preview-footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  justify-content: flex-end;
+  padding: 0.85rem 1.25rem 1.1rem;
+  border-top: 1px solid var(--border-color);
+  background: var(--bg-card);
+}
+
+.pdf-preview-btn {
+  padding: 0.5rem 1.1rem;
+  border-radius: 10px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid var(--border-color);
+  background: var(--glass-bg);
+  color: var(--text-primary);
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.pdf-preview-btn:hover:not(:disabled) {
+  border-color: var(--accent-blue);
+  color: var(--accent-blue);
+}
+
+.pdf-preview-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.pdf-preview-btn--primary {
+  background: var(--gradient-blue);
+  color: #fff;
+  border-color: transparent;
+}
+
+.pdf-preview-btn--primary:hover:not(:disabled) {
+  filter: brightness(1.08);
+  color: #fff;
+}
+
+.pdf-preview-filename {
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  padding: 0 1.25rem 1rem;
+  margin: 0;
+  text-align: center;
+  word-break: break-all;
+  opacity: 0.85;
 }

@@ -1,14 +1,20 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
-export default function ComparisonMetrics({ usernames }) {
+export default function ComparisonMetrics({ usernames, onExportReady }) {
   const [profile1, setProfile1] = useState(null);
   const [profile2, setProfile2] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (!usernames.first || !usernames.second) {
+      onExportReady?.(false);
+      return;
+    }
+
     const fetchData = async () => {
       setLoading(true);
+      onExportReady?.(false);
       try {
         // Fetch user profiles
         const [data1, data2] = await Promise.all([
@@ -20,38 +26,67 @@ export default function ComparisonMetrics({ usernames }) {
           ),
         ]);
 
+        if (data1.message || data2.message) {
+          setProfile1(null);
+          setProfile2(null);
+          onExportReady?.(false);
+          return;
+        }
+
         // Fetch repos to calculate stars, forks, watchers
         const [repos1, repos2] = await Promise.all([
-          fetch(`https://api.github.com/users/${usernames.first}/repos?per_page=100`).then((r) => r.json()),
-          fetch(`https://api.github.com/users/${usernames.second}/repos?per_page=100`).then((r) => r.json()),
+          fetch(
+            `https://api.github.com/users/${usernames.first}/repos?per_page=100`
+          ).then((r) => r.json()),
+          fetch(
+            `https://api.github.com/users/${usernames.second}/repos?per_page=100`
+          ).then((r) => r.json()),
         ]);
 
+        if (!Array.isArray(repos1) || !Array.isArray(repos2)) {
+          setProfile1(null);
+          setProfile2(null);
+          onExportReady?.(false);
+          return;
+        }
+
         const computeTotals = (repos) => ({
-          total_stars: repos.reduce((sum, repo) => sum + (repo.stargazers_count || 0), 0),
-          total_forks: repos.reduce((sum, repo) => sum + (repo.forks_count || 0), 0),
-          total_watchers: repos.reduce((sum, repo) => sum + (repo.watchers_count || 0), 0),
+          total_stars: repos.reduce(
+            (sum, repo) => sum + (repo.stargazers_count || 0),
+            0
+          ),
+          total_forks: repos.reduce(
+            (sum, repo) => sum + (repo.forks_count || 0),
+            0
+          ),
+          total_watchers: repos.reduce(
+            (sum, repo) => sum + (repo.watchers_count || 0),
+            0
+          ),
         });
 
         const totals1 = computeTotals(repos1);
         const totals2 = computeTotals(repos2);
 
         // Final score: sum of stars + forks + watchers
-        const finalScore1 = totals1.total_stars + totals1.total_forks + totals1.total_watchers;
-        const finalScore2 = totals2.total_stars + totals2.total_forks + totals2.total_watchers;
+        const finalScore1 =
+          totals1.total_stars + totals1.total_forks + totals1.total_watchers;
+        const finalScore2 =
+          totals2.total_stars + totals2.total_forks + totals2.total_watchers;
 
         setProfile1({ ...data1, ...totals1, final_score: finalScore1 });
         setProfile2({ ...data2, ...totals2, final_score: finalScore2 });
+        onExportReady?.(true);
       } catch (error) {
         console.error("Error fetching profiles:", error);
+        onExportReady?.(false);
       } finally {
         setLoading(false);
       }
     };
 
-    if (usernames.first && usernames.second) {
-      fetchData();
-    }
-  }, [usernames]);
+    fetchData();
+  }, [usernames, onExportReady]);
 
   if (loading) {
     return (

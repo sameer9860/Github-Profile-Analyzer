@@ -1,13 +1,16 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import SearchBar from "../components/SearchBar";
 import ProfileCard from "../components/ProfileCard";
+import ExportPdfButton from "../components/ExportPdfButton";
+import { safeFilenameSegment } from "../utils/exportPdf";
 import "../index.css";
 import "../App.css";
-import { useGithubProfile } from "../hooks/useGithubProfile";
 
 export default function Dashboard({ onBack }) {
   const [username, setUsername] = useState("");
+  const pdfRef = useRef(null);
+  const [analysisExportReady, setAnalysisExportReady] = useState(false);
 
   return (
     <div className="dashboard">
@@ -42,12 +45,27 @@ export default function Dashboard({ onBack }) {
         <p>Analyze GitHub developers with visual insights</p>
 
         <SearchBar onSearch={setUsername} />
+        {username && (
+          <div className="hero-pdf-row">
+            <ExportPdfButton
+              targetRef={pdfRef}
+              filename={`${safeFilenameSegment(username)}-github-profile-analysis.pdf`}
+              subtitle={`Analysis · ${username}`}
+              disabled={!analysisExportReady}
+            />
+          </div>
+        )}
       </section>
 
       {/* CONTENT */}
       {username && (
         <section className="content">
-          <ProfileCard username={username} />
+          <div ref={pdfRef} className="pdf-capture-root">
+            <ProfileCard
+              username={username}
+              onExportReady={setAnalysisExportReady}
+            />
+          </div>
         </section>
       )}
     </div>

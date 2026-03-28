@@ -23,7 +23,11 @@ export default defineConfig([
       },
     },
     rules: {
-      'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
+      // framer-motion: <motion.div> uses `motion` (lowercase) as namespace
+      'no-unused-vars': [
+        'error',
+        { varsIgnorePattern: '^[A-Z_]|^motion$' },
+      ],
     },
   },
 ])

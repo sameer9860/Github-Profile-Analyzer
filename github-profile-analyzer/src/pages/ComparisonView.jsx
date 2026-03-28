@@ -1,12 +1,16 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import ComparisonSearch from "../components/ComparisonSearch";
 import Comparison from "../components/Comparison";
+import ExportPdfButton from "../components/ExportPdfButton";
+import { safeFilenameSegment } from "../utils/exportPdf";
 import "../index.css";
 import "../App.css";
 
 export default function ComparisonView({ usernames, onSearch, onBack }) {
   const [currentUsernames, setCurrentUsernames] = useState(usernames);
+  const pdfRef = useRef(null);
+  const [comparisonExportReady, setComparisonExportReady] = useState(false);
 
   const handleSearch = (newUsernames) => {
     setCurrentUsernames(newUsernames);
@@ -46,12 +50,43 @@ export default function ComparisonView({ usernames, onSearch, onBack }) {
         <p>Compare two developers side-by-side with detailed metrics</p>
 
         <ComparisonSearch onSearch={handleSearch} />
+        {currentUsernames.first && currentUsernames.second && (
+          <div className="hero-pdf-row hero-pdf-row--wide">
+            <ExportPdfButton
+              targetRef={pdfRef}
+              filename={`github-comparison-${safeFilenameSegment(currentUsernames.first)}-vs-${safeFilenameSegment(currentUsernames.second)}.pdf`}
+              subtitle={`Comparison · ${currentUsernames.first} vs ${currentUsernames.second}`}
+              variant="comparison"
+              disabled={!comparisonExportReady}
+            />
+          </div>
+        )}
       </section>
 
       {/* COMPARISON CONTENT */}
       {(currentUsernames.first || currentUsernames.second) && (
         <section className="content">
-          <Comparison usernames={currentUsernames} />
+          <div
+            ref={
+              currentUsernames.first && currentUsernames.second
+                ? pdfRef
+                : null
+            }
+            className={
+              currentUsernames.first && currentUsernames.second
+                ? "pdf-capture-root pdf-capture-root--comparison"
+                : undefined
+            }
+          >
+            <Comparison
+              usernames={currentUsernames}
+              onExportReady={
+                currentUsernames.first && currentUsernames.second
+                  ? setComparisonExportReady
+                  : undefined
+              }
+            />
+          </div>
         </section>
       )}
     </div>
