@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
 import ComparisonView from "./pages/ComparisonView";
+import ThemeToggle from "./components/ThemeToggle";
 import "./App.css";
 
 export default function App() {
@@ -26,6 +27,8 @@ export default function App() {
   };
 
   return (
+    <>
+      <ThemeToggle />
     <AnimatePresence mode="wait">
       {mode === "home" && (
         <motion.div
@@ -67,5 +70,6 @@ export default function App() {
         </motion.div>
       )}
     </AnimatePresence>
+    </>
   );
 }
