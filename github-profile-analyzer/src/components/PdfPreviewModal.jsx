@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { PdfGlyph } from "./PdfIcons";
 
 export default function PdfPreviewModal({
   open,
@@ -87,7 +88,14 @@ export default function PdfPreviewModal({
             onClick={onDownload}
             disabled={actionsDisabled || !previewUrl}
           >
-            {disabledActions ? "Saving…" : "Download PDF"}
+            {disabledActions ? (
+              <span className="pdf-export-btn__busy" aria-hidden />
+            ) : (
+              <PdfGlyph className="pdf-preview-btn__icon" />
+            )}
+            <span className="pdf-preview-btn__label">
+              {disabledActions ? "Saving…" : "Download PDF"}
+            </span>
           </button>
         </div>
         {filename && (
