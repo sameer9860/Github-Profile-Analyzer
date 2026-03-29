@@ -2,9 +2,6 @@
 
 A **React-based dashboard application** that analyzes GitHub profiles and compare them in real time and presents developer insights through a clean, modern UI.
 
-**Live demo:** https://github-profile-analyzerrr.netlify.app/  
-(SEO optimized for discoverability)
-
 This project is built for **portfolio, LinkedIn, and professional development**, focusing on real-world frontend practices like API handling, data visualization, and UX polish.
 
 ---
@@ -14,13 +11,21 @@ This project is built for **portfolio, LinkedIn, and professional development**,
 ### Dashboard Overview
 
 ![Dashboard Overview](/github-profile-analyzer/public/gpa1.png)
+![Dashboard Overview](/github-profile-analyzer/public/gpa1o.png)
 
 ### 📊 Analyzer Mode
 
 Detailed breakdown of user stats, repositories, and languages.
 
 ![Analyzer Screenshot](/github-profile-analyzer/public/gpa2.png)
+![Analyzer Screenshot](/github-profile-analyzer/public/gpa2o.png)
 ![Analyzer Screenshot](/github-profile-analyzer/public/gpa3.png)
+![Analyzer Screenshot](/github-profile-analyzer/public/gpa3o.png)
+
+
+
+
+
 
 
 ### 🆚 Comparison Mode
@@ -28,12 +33,40 @@ Detailed breakdown of user stats, repositories, and languages.
 Compare two GitHub profiles side-by-side to see who has more contributions, followers, and better stats.
 
 ![Comparison Screenshot](/github-profile-analyzer/public/gpa4.png)
+![Comparison Screenshot](/github-profile-analyzer/public/gpa5o.png)
 ![Comparison Screenshot](/github-profile-analyzer/public/gpa5.png)
+![Comparison Screenshot](/github-profile-analyzer/public/gpa6o.png)
 ![Comparison Screenshot](/github-profile-analyzer/public/gpa6.png)
+![Comparison Screenshot](/github-profile-analyzer/public/gpa7o.png)
 ![Comparison Screenshot](/github-profile-analyzer/public/gpa7.png)
+![Comparison Screenshot](/github-profile-analyzer/public/gpa8o.png)
 ![Comparison Screenshot](/github-profile-analyzer/public/gpa8.png)
+![Comparison Screenshot](/github-profile-analyzer/public/gpa9o.png)
+
 
 ---
+
+
+### Download Mode
+
+Download single profile  as pdf.
+
+
+![Download Screenshot](/github-profile-analyzer/public/gpa15o.png)
+![Download Screenshot](/github-profile-analyzer/public/gpa16o.png)
+![Download Screenshot](/github-profile-analyzer/public/gpa17o.png)
+
+
+### Download Comparison Mode
+
+Download two profiles as pdf and compare them.
+![Download Screenshot](/github-profile-analyzer/public/gpa10o.png)
+![Download Screenshot](/github-profile-analyzer/public/gpa11o.png)
+![Download Screenshot](/github-profile-analyzer/public/gpa12o.png)
+![Download Screenshot](/github-profile-analyzer/public/gpa13o.png)
+![Download Screenshot](/github-profile-analyzer/public/gpa14o.png)
+
+
 
 ## ✨ Features
 
@@ -94,11 +127,6 @@ http://localhost:5173
 ```
 
 ---
-
-## 🌐 SEO & Deployment
-
-The app is deployed on Netlify and includes meta tags for search engines, Open Graph, and Twitter cards to improve ranking and sharing.  
-Live URL: https://github-profile-analyzerrr.netlify.app/
 
 ## 🚀 Future Improvements
 
