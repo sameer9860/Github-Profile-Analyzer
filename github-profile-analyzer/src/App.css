@@ -6,11 +6,17 @@
   position: relative;
 }
 
-.theme-toggle {
+.header-actions {
   position: fixed;
   top: 1.25rem;
   right: 1.25rem;
   z-index: 200;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.theme-toggle {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -25,7 +31,43 @@
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   box-shadow: var(--shadow-sm);
-  transition: border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  transition: all 0.2s ease;
+}
+
+.github-star-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0 1rem;
+  height: 44px;
+  border-radius: 12px;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg);
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s ease;
+}
+
+.github-star-button:hover,
+.theme-toggle:hover {
+  border-color: var(--accent-blue);
+  color: var(--accent-blue);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(88, 166, 255, 0.2);
+}
+
+.github-star-button svg {
+  color: #e3b341; /* Gold star color */
+  transition: transform 0.3s ease;
+}
+
+.github-star-button:hover svg {
+  transform: scale(1.1) rotate(15deg);
 }
 
 .theme-toggle:hover {
