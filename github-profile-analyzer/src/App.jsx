@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
 import ComparisonView from "./pages/ComparisonView";
 import ThemeToggle from "./components/ThemeToggle";
+import GithubStar from "./components/GithubStar";
 import "./App.css";
 
 export default function App() {
@@ -28,7 +29,10 @@ export default function App() {
 
   return (
     <>
-      <ThemeToggle />
+      <div className="header-actions">
+        <GithubStar />
+        <ThemeToggle />
+      </div>
     <AnimatePresence mode="wait">
       {mode === "home" && (
         <motion.div
