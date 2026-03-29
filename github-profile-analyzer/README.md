@@ -128,11 +128,6 @@ http://localhost:5173
 
 ---
 
-## 🚀 Future Improvements
 
-- Dark / light theme toggle
-- Export profile analysis as PDF
-
----
 
 **Built with ❤️ using React**
