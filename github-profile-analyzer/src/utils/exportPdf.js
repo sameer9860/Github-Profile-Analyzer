@@ -47,7 +47,7 @@ function computeScale(element) {
 function waitForImages(container) {
   const imgs = container.querySelectorAll("img");
   return Promise.all(
-    [...imgs].map(
+    Array.from(imgs).map(
       (img) =>
         new Promise((resolve) => {
           if (img.complete && img.naturalWidth > 0) {
@@ -92,6 +92,7 @@ function applyHtml2CanvasCloneFixes(clonedDoc, clonedEl, variant) {
     node.style.setProperty("opacity", "1", "important");
     node.style.setProperty("mix-blend-mode", "normal", "important");
     node.style.setProperty("clip-path", "none", "important");
+    node.style.setProperty("overflow", "visible", "important");
   });
 
   clonedDoc.querySelectorAll("svg").forEach((svg) => {
@@ -129,6 +130,8 @@ function buildHtml2CanvasOptions(
     logging: false,
     backgroundColor,
     imageTimeout: 25000,
+    width: 1200,
+    windowWidth: 1200,
     foreignObjectRendering,
     onclone(clonedDoc, clonedEl) {
       applyHtml2CanvasCloneFixes(clonedDoc, clonedEl, variant);
@@ -152,21 +155,40 @@ export async function captureElementToCanvas(element, options = {}) {
   const backgroundColor =
     bgPrimary && bgPrimary !== "" ? bgPrimary : "#0a0c10";
 
-  element.classList.add("pdf-capture-active");
-  element.scrollTop = 0;
-  element.scrollIntoView({ block: "start" });
+  const originalStyles = {
+    position: element.style.position,
+    top: element.style.top,
+    left: element.style.left,
+    width: element.style.width,
+    zIndex: element.style.zIndex,
+    margin: element.style.margin,
+    padding: element.style.padding,
+    backgroundColor: element.style.backgroundColor,
+  };
 
-  await new Promise((r) => requestAnimationFrame(() => r()));
-  await waitForImages(element);
-  await new Promise((r) => setTimeout(r, 80));
-
-  const { scale } = computeScale(element);
-  const { variant = "default" } = options;
-  const pixelRatio = Math.min(2, scale);
+  const bodyOverflow = document.body.style.overflow;
+  const scrollX = window.scrollX;
+  const scrollY = window.scrollY;
 
   try {
+    // Force a clean state at the top for fixed capture
+    window.scrollTo(0, 0);
+    document.body.style.overflow = "hidden";
+
+    element.classList.add("pdf-capture-active");
+    element.scrollTop = 0;
+
+    // Small delay for layout recalculation
+    await new Promise((r) => requestAnimationFrame(() => r()));
+    await waitForImages(element);
+    await new Promise((r) => setTimeout(r, 150));
+
+    const { variant = "default" } = options;
+    const pixelRatio = 2; // High quality fixed ratio for 1200px
+
     try {
-      const [{ default: html2canvas }] = await import("html2canvas");
+      const html2canvasModule = await import("html2canvas");
+      const html2canvas = html2canvasModule.default;
 
       let canvas;
       try {
@@ -211,10 +233,12 @@ export async function captureElementToCanvas(element, options = {}) {
     }
 
     try {
-      const { toCanvas } = await import("html-to-image");
+      const htmlToImageModule = await import("html-to-image");
+      const toCanvas = htmlToImageModule.toCanvas;
       const opts = {
         pixelRatio,
         backgroundColor,
+        width: 1200,
         cacheBust: true,
         skipFonts: true,
         imagePlaceholder: IMAGE_PLACEHOLDER,
@@ -229,7 +253,8 @@ export async function captureElementToCanvas(element, options = {}) {
     }
 
     try {
-      const { toCanvas } = await import("html-to-image");
+      const htmlToImageModule = await import("html-to-image");
+      const toCanvas = htmlToImageModule.toCanvas;
       const width = Math.max(
         1,
         element.scrollWidth,
@@ -244,7 +269,7 @@ export async function captureElementToCanvas(element, options = {}) {
       );
 
       const lastCanvas = await toCanvas(element, {
-        width,
+        width: 1200,
         height,
         pixelRatio,
         backgroundColor,
@@ -256,7 +281,7 @@ export async function captureElementToCanvas(element, options = {}) {
       assertCanvasExportable(lastCanvas);
       return lastCanvas;
     } catch (e) {
-      console.warn("html-to-image (fixed size) failed:", e);
+      console.warn("html-to-image capture failed:", e);
       throw e;
     }
   } catch (e) {
@@ -264,6 +289,9 @@ export async function captureElementToCanvas(element, options = {}) {
     throw new Error("Could not capture the page");
   } finally {
     element.classList.remove("pdf-capture-active");
+    Object.assign(element.style, originalStyles);
+    document.body.style.overflow = bodyOverflow;
+    window.scrollTo(scrollX, scrollY);
   }
 }
 
@@ -296,7 +324,8 @@ function clampCanvasForPdf(canvas) {
 export async function saveCanvasAsPolishedPdf(canvas, filename, options = {}) {
   const { subtitle = "" } = options;
 
-  const [{ jsPDF }] = await import("jspdf");
+  const jspdfModule = await import("jspdf");
+  const jsPDF = jspdfModule.jsPDF;
 
   const forPdf = clampCanvasForPdf(canvas);
 
