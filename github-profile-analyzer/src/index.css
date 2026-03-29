@@ -275,13 +275,76 @@ button:active {
   width: 100%;
 }
 
-/* Strip effects that break DOM-to-image / html2canvas rasterization */
+/* Force natural but clean layout during PDF capture */
 .pdf-capture-root.pdf-capture-active,
 .pdf-capture-root.pdf-capture-active * {
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
   animation: none !important;
   transition: none !important;
+  box-shadow: none !important;
+}
+
+.pdf-capture-active {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 1200px !important;
+  min-width: 1200px !important;
+  z-index: 999999 !important;
+  background-color: var(--bg-primary) !important;
+  color: var(--text-primary) !important;
+  margin: 0 !important;
+  padding: 40px !important;
+  visibility: visible !important;
+  overflow: visible !important;
+  transform: none !important;
+}
+
+/* Force desktop layout for children when capture is active */
+.pdf-capture-active .dashboard {
+  max-width: 1200px !important;
+  padding: 0 !important;
+  gap: 40px !important;
+}
+
+.pdf-capture-active .content {
+  grid-template-columns: repeat(2, 1fr) !important;
+  display: grid !important;
+  width: 100% !important;
+}
+
+.pdf-capture-active .profile-card {
+  flex-direction: row !important;
+  align-items: flex-start !important;
+  text-align: left !important;
+  padding: 40px !important;
+  gap: 48px !important;
+  width: 100% !important;
+  overflow: visible !important;
+}
+
+.pdf-capture-active .profile-avatar {
+  width: 140px !important;
+  height: 140px !important;
+}
+
+.pdf-capture-active .profile-info {
+  align-items: flex-start !important;
+  text-align: left !important;
+}
+
+.pdf-capture-active .stats-inline {
+  justify-content: flex-start !important;
+}
+
+.pdf-capture-active,
+.pdf-capture-active * {
+  animation: none !important;
+  transition: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: none !important;
 }
 
 /* PROFILE CARD OVERHAUL */
@@ -883,6 +946,10 @@ html[data-theme="light"] .pdf-preview-sheet {
 }
 
 .pdf-preview-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
   padding: 0.5rem 1.1rem;
   border-radius: 10px;
   font-size: 0.88rem;
@@ -892,6 +959,14 @@ html[data-theme="light"] .pdf-preview-sheet {
   background: var(--glass-bg);
   color: var(--text-primary);
   transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.pdf-preview-btn__icon {
+  flex-shrink: 0;
+}
+
+.pdf-preview-btn__label {
+  line-height: 1;
 }
 
 .pdf-preview-btn:hover:not(:disabled) {
