@@ -20,7 +20,7 @@ export function useGithubProfile(username) {
         if (!userRes.ok) throw new Error("User not found");
 
         const repoRes = await fetch(
-          `https://api.github.com/users/${username}/repos`
+          `https://api.github.com/users/${username}/repos?per_page=200`
         );
 
         setUser(await userRes.json());
